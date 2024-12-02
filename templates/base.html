@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- External CSS link -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+    <!-- Optionally add an icon for your website -->
+    <!-- <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon"> -->
+
+    <!-- Block to insert additional head content in child templates -->
+    {% block head %}{% endblock %}
+
+    <title>{% block title %}CardioRisk{% endblock %}</title> <!-- Dynamic title block -->
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CardioRisk</h1>
+        </header>
+
+        <section class="selection-section">
+            <div class="select-algorithm">
+                <label for="algorithm">Select an Algorithm:</label>
+                <select id="algorithm">
+                    <option value="merge">Merge Sort</option>
+                    <option value="heap">Heap Sort</option>
+                    <option value="quick">Quick Sort</option>
+                    <option value="bubble">Bubble Sort</option>
+                </select>
+            </div>
+            <button class="play-btn">▶ Play</button>
+        </section>
+
+        <section class="chart-section">
+            <h2>Mapping Heart Disease Risk Across BMI Levels</h2>
+            <div class="chart">
+                <img src="{{ url_for('static', filename='images/bar_chart.png') }}" alt="Heart Disease Risk Bar Chart">
+            </div>
+        </section>
+    </div>
+
+    {% block body %}{% endblock %}
+</body>
+</html>

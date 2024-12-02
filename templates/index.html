@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block title %}Heart Disease Risk Tracker{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <h2>Track Heart Disease Risk by BMI</h2>
+        <p>Select an algorithm to sort the BMI data and see how the risk changes across years. The chart below represents heart disease risk percentages for various BMI levels over the years.</p>
+
+        <!-- More content related to your page -->
+    </div>
+{% endblock %}
