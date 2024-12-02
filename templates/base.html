@@ -22,27 +22,58 @@
             <h1>CardioRisk</h1>
         </header>
 
-        <section class="selection-section">
+        <form>
             <div class="select-algorithm">
                 <label for="algorithm">Select an Algorithm:</label>
-                <select id="algorithm">
+                <select id="algorithm" name="algorithm">
                     <option value="merge">Merge Sort</option>
                     <option value="heap">Heap Sort</option>
                     <option value="quick">Quick Sort</option>
                     <option value="bubble">Bubble Sort</option>
                 </select>
             </div>
-            <button class="play-btn">▶ Play</button>
-        </section>
+            <button type="button" id="play-btn" class="play-btn">▶ Play</button>
+        </form>
 
         <section class="chart-section">
             <h2>Mapping Heart Disease Risk Across BMI Levels</h2>
             <div class="chart">
-                <img src="{{ url_for('static', filename='images/bar_chart.png') }}" alt="Heart Disease Risk Bar Chart">
-            </div>
+                <img id="generated-chart" src="{{ url_for('static', filename='images/bar_chart.png') }}" alt="Heart Disease Risk Bar Chart">            </div>
         </section>
     </div>
 
     {% block body %}{% endblock %}
+
+    <script>
+        document.getElementById('play-btn').addEventListener('click', function () {
+            const algorithm = document.getElementById('algorithm').value;
+    
+            // Send a POST request to generate the graph
+            fetch('/generate_graph', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `algorithm=${algorithm}`,
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        // Update the graph image dynamically based on the selected algorithm
+                        const imageFileName = `${algorithm}_sort_chart.png`; // Use algorithm to determine file name
+                        document.getElementById('generated-chart').src = `/static/images/${imageFileName}?${new Date().getTime()}`;
+                        console.log(`Graph updated successfully: ${imageFileName}`);
+                    } else {
+                        console.error('Error generating graph:', response);
+                        alert('Failed to generate graph. Please try again.');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Fetch error:', error);
+                    alert('An error occurred while generating the graph.');
+                });
+        });
+    </script>
+        
+
 </body>
 </html>
